@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="laboratorio3-enoc-raul/laboratorio3-enoc-raul.vcxproj" Id="1fbb6114-e72a-4d57-844b-cae29434b3a4" />
+</Solution>
