@@ -78,3 +78,75 @@ int Character::getTotalCharactersCreated() {
 bool Character::operator==(const Character& other) const {
 	return this->experienceLevel == other.experienceLevel;
 }
+
+// Warrior // 
+
+Warrior::Warrior()
+	:Character(), meleeAttackStrength(10) {
+}
+
+Warrior::Warrior(std::string _name, int _level, int _hp, int _attackStrength)
+	: Character(_name, _level, _hp) {
+	setMeleeAttackStrength(_attackStrength);
+}
+
+Warrior::Warrior(const Warrior& other)
+	: Character(other), meleeAttackStrength(other.meleeAttackStrength) {
+}
+
+Warrior::~Warrior() {
+}
+
+int Warrior::getMeleeAttackStrength() const {
+	return meleeAttackStrength;
+}
+
+void Warrior::setMeleeAttackStrength(int _strength) {
+	if (_strength < 0) {
+		this->meleeAttackStrength = 0;
+	}
+	else {
+		this->meleeAttackStrength = _strength;
+	}
+}
+
+void Warrior::displayInfo() const {
+	Character::displayInfo();
+	std::cout << " -> Melee Attack Strength: " << meleeAttackStrength << std::endl;
+}
+
+// Mage //
+
+Mage::Mage()
+	: Character(), manaPoints(50) {
+}
+
+Mage::Mage(std::string _name, int _level, int _hp, int _mana)
+	: Character(_name, _level, _hp) {
+	setManaPoints(_mana);
+}
+
+Mage::Mage(const Mage& other)
+	: Character(other), manaPoints(other.manaPoints) {
+}
+
+Mage::~Mage() {
+}
+
+int Mage::getManaPoints() const {
+	return manaPoints;
+}
+
+void Mage::setManaPoints(int _mana) {
+	if (_mana < 0) {
+		this->manaPoints = 0;
+	}
+	else {
+		this->manaPoints = _mana;
+	}
+}
+
+void Mage::displayInfo() const {
+	Character::displayInfo();
+	std::cout << " -> Mana Points: " << manaPoints << std::endl;
+}
