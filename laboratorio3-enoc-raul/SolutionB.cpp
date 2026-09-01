@@ -150,3 +150,82 @@ void Mage::displayInfo() const {
 	Character::displayInfo();
 	std::cout << " -> Mana Points: " << manaPoints << std::endl;
 }
+
+// Paladin
+Paladin::Paladin()
+	: Warrior(), shieldPoints(30) {}
+
+Paladin::Paladin(std::string _name, int _level, int _hp, int _attackStrength, int _shield)
+	: Warrior(_name, _level, _hp, _attackStrength) {
+	setShieldPoints(_shield);
+}
+
+Paladin::Paladin(const Paladin& other)
+	: Warrior(other), shieldPoints(other.shieldPoints) {}
+
+Paladin::~Paladin() {}
+
+int Paladin::getShieldPoints() const {
+	return shieldPoints;
+}
+
+void Paladin::setShieldPoints(int _shield) {
+	if (_shield < 0) {
+		this->shieldPoints = 0;
+	}
+	else {
+		this->shieldPoints = _shield;
+	}
+}
+
+void Paladin::displayInfo() const {
+	Warrior::displayInfo();
+	std::cout << "  -> Shield Points: " << shieldPoints << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Paladin& p) {
+	os << "Paladin [" << p.getName()
+		<< "] Level: " << p.getExperienceLevel()
+		<< " | HP: " << p.getHealthPoints()
+		<< " | Attack: " << p.getMeleeAttackStrength()
+		<< " | Shield: " << p.getShieldPoints();
+	return os;
+}
+
+// Adventuring Party
+AdventuringParty::AdventuringParty(std::string _partyName, int _capacity)
+	: partyName(_partyName), capacity(_capacity), currentMembersCount(0) {
+	members = new Character * [capacity];
+	for (int i = 0; i < capacity; i++) {
+		members[i] = nullptr;
+	}
+}
+
+AdventuringParty::~AdventuringParty() {
+	delete[] members;
+}
+
+bool AdventuringParty::addMember(Character* character) {
+	if (character == nullptr || currentMembersCount >= capacity) {
+		return false;
+	}
+	members[currentMembersCount] = character;
+	currentMembersCount++;
+	return true;
+}
+
+int AdventuringParty::getMemberCount() const {
+	return currentMembersCount;
+}
+
+void AdventuringParty::showPartyMembers() const {
+	std::cout << "\n=== Party: " << partyName << " ===" << std::endl;
+	std::cout << "Members: " << currentMembersCount << "/" << capacity << std::endl;
+	for (int i = 0; i < currentMembersCount; i++) {
+		if (members[i] != nullptr) {
+			std::cout << (i + 1) << ". ";
+			members[i]->displayInfo();
+		}
+	}
+	std::cout << "========================\n" << std::endl;
+}
