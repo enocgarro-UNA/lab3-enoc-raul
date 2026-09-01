@@ -180,7 +180,7 @@ void Paladin::setShieldPoints(int _shield) {
 
 void Paladin::displayInfo() const {
 	Warrior::displayInfo();
-	std::cout << "  -> Shield Points: " << shieldPoints << std::endl;
+	std::cout << " -> Shield Points: " << shieldPoints << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const Paladin& p) {
@@ -227,5 +227,80 @@ void AdventuringParty::showPartyMembers() const {
 			members[i]->displayInfo();
 		}
 	}
-	std::cout << "========================\n" << std::endl;
+	std::cout << std::endl;
+}
+
+int main() {
+	std::cout << "===== LABORATORIO 3 - POO: HERENCIA =====\n" << std::endl;
+
+	Character hero("Ares", 5, 120);
+	Warrior warrior("Tyr", 8, 200, 45);
+	Mage mage("Mimir", 6, 90, 150);
+	Paladin paladin("Forseti", 12, 250, 60, 80);
+
+	std::cout << "--- Personajes creados ---" << std::endl;
+	hero.displayInfo();
+	warrior.displayInfo();
+	mage.displayInfo();
+	paladin.displayInfo();
+
+	std::cout << "\nContador despues de crear personajes principales: "
+		<< Character::getTotalCharactersCreated() << std::endl;
+
+	// Constructor copia
+	std::cout << "\n--- Constructor de copia ---" << std::endl;
+	Character copyHero(hero);
+	Warrior copyWarrior(warrior);
+	Paladin copyPaladin(paladin);
+
+	std::cout << "Original: ";
+	hero.displayInfo();
+	std::cout << "Copia:    ";
+	copyHero.displayInfo();
+
+	copyHero.setName("Ares (Copia)");
+	copyHero.setHealthPoints(50);
+
+	std::cout << "\nDespues de modificar la copia:" << std::endl;
+	std::cout << "Original: ";
+	hero.displayInfo();
+	std::cout << "Copia:    ";
+	copyHero.displayInfo();
+
+	std::cout << "\nContador despues de las copias: "
+		<< Character::getTotalCharactersCreated() << std::endl;
+
+	std::cout << "\n--- Contador static ---" << std::endl;
+	std::cout << "Total de personajes creados: "
+		<< Character::getTotalCharactersCreated() << std::endl;
+
+	// Se compara personajes con operator==
+	std::cout << "\n--- Comparacion con operator== ---" << std::endl;
+	Character sameLevel("Test1", 5, 100);
+	Character differentLevel("Test2", 7, 100);
+
+	std::cout << "hero == sameLevel = "
+		<< (hero == sameLevel ? "true" : "false") << std::endl;
+	std::cout << "hero == differentLevel = "
+		<< (hero == differentLevel ? "true" : "false") << std::endl;
+	std::cout << "warrior == paladin = "
+		<< (warrior == paladin ? "true" : "false") << std::endl;
+
+	std::cout << "\nContador final (despues de crear los de comparacion): "
+		<< Character::getTotalCharactersCreated() << std::endl;
+
+	std::cout << "\n --- Adventuring Party --- " << std::endl;
+	AdventuringParty party("The Brave Ones", 6);
+
+	party.addMember(&hero);
+	party.addMember(&warrior);
+	party.addMember(&mage);
+	party.addMember(&paladin);
+	party.addMember(&copyHero);
+
+	std::cout << "Cantidad de integrantes: " << party.getMemberCount() << std::endl;
+	party.showPartyMembers();
+
+	std::cout << "===== FIN =====" << std::endl;
+	return 0;
 }
