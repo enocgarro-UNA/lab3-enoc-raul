@@ -1,8 +1,16 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <string>
 
 class Character {
+// FEEDBACK: Estos tres atributos deben ser private. El enunciado permite protected solo donde una clase
+//           derivada necesite acceder directamente, y ninguna lo necesita: Warrior::displayInfo llama a
+//           Character::displayInfo, que es un METODO, no toca name ni healthPoints. Paladin hace lo mismo
+//           con Warrior::displayInfo. Todo el acceso ya pasa por la interfaz.
+//           Fijense que en Paladin si usaron private para shieldPoints, y funciona igual. Ese es el
+//           criterio correcto para las otras tres clases.
+//           Regla practica: empiecen siempre en private y suban a protected solo cuando el compilador se
+//           lo exija. protected abre el atributo a todas las clases que hereden en el futuro.
 protected:
     std::string name;
     int experienceLevel;
@@ -32,6 +40,7 @@ public:
 
 class Warrior : public Character {
 protected:
+    // FEEDBACK: Mismo caso: este atributo deberia ser private. Paladin nunca lo toca directamente.
     int meleeAttackStrength;
 
 public:
@@ -48,6 +57,7 @@ public:
 
 class Mage : public Character {
 protected:
+    // FEEDBACK: Mismo caso: private. Ninguna clase hereda de Mage en su entrega.
     int manaPoints;
 
 public:
